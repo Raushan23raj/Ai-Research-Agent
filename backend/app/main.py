@@ -13,7 +13,10 @@ app = FastAPI(title="AI Research Agent", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+    "http://localhost:5173",
+    "https://frontend-r1-8d3e.vercel.app",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
