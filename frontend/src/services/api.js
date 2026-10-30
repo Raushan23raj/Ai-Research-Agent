@@ -1,4 +1,5 @@
-const BASE = import.meta.env.VITE_API_URL || "https://ai-research-agent-1-zuz2.onrender.com";
+const API = import.meta.env.VITE_API_URL || "https://ai-research-agent-1-zuz2.onrender.com";
+const BASE = API.replace(/\/+$/, "");
 
 export function streamUrl(query) {
   return `${BASE}/research/stream?query=${encodeURIComponent(query)}`;
