@@ -11,12 +11,22 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="AI Research Agent", lifespan=lifespan)
 
+@app.middleware("http")
+async def collapse_double_slashes(request, call_next):
+    path = request.scope["path"]
+    while "//" in path:
+        path = path.replace("//", "/")
+    request.scope["path"] = path
+    return await call_next(request)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "http://localhost:5173",
-    "https://frontend-r1-8d3e.vercel.app",
+        "http://localhost:5173",
+        "https://frontend-r1-8d3e.vercel.app",
+        "https://ai-research-agent-r1-8d3e.vercel.app",
     ],
+    allow_origin_regex=r"https://.*-r1-8d3e\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
